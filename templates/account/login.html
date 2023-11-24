@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load markfilter %}
+{% comment %} {% include 'base.html' %} {% endcomment %}
+<div>
+    <div class="account_container">
+        <form method="post" action="{% url 'account:login' %}">
+            {% csrf_token %}
+            {% include "account/form_errors.html" %}
+            <div class="accountform">
+                <label for="username">사용자ID</label>
+                <input type="text" class="form-control" name="username" id="username"
+                    value="{{ form.username.value|default_if_none:'' }}">
+                <label for="password">비밀번호</label>
+                <input type="password" class="form-control" name="password" id="password"
+                    value="{{ form.password.value|default_if_none:'' }}">
+                <button type="button" class="btn btn-signup hyperref-not-submit" destination="{% url 'account:signup' %}">회원가입</button>
+                <button type="submit" class="btn btn-primary btn-login">로그인</button>
+            </div>
+        </form>
+        {% comment %} <a href="{% url 'account:signup' %}"><button class="btn btn-signup">회원가입</button></a> {% endcomment %}
+    </div>
+</div>
+{% endblock %}

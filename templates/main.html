@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="app-select">
+    {% if convMngrAdmin %}
+    <a class="app-select foxrain-button" href="{% url 'convmngr:lists' %}">
+        대화 관리자
+    </a>
+    {% else %}
+    <div class="app-select foxrain-button disabled">
+        대화 관리자
+    </div>
+    {% endif %}
+    <a class="app-select foxrain-button" href="{% url 'chat:main'%}">
+        대화 시작
+    </a>
+</div>
+{% endblock %}

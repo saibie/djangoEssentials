@@ -1,0 +1,51 @@
+html, body {
+    height: 100%;
+    margin:0px;
+}
+:root {
+    --main-body-height: calc(100vh - 4rem);
+    --main-body-width: calc(100vw - 16rem);
+}
+.main-body {
+    display: grid;
+    grid-template-rows: 4rem var(--main-body-height);
+    grid-template-columns: 16rem var(--main-body-width);
+    width: 100vw;
+    height: 100vh;
+}
+.apptitle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: aquamarine;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+.top-controllers {
+    background-color: red;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+.left-controllers{
+    background-color: blue;
+}
+
+/* 버튼 */
+.base-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white; font-weight: bold; text-decoration: none;
+    width: 15rem; height: 3rem;
+    background-color: grey;
+    font-size: 1.5rem;
+    font-weight: bold;
+    border: 1px solid white;
+}
+
+/* 기타 장식 태그 */
+.disabled {
+    color: #999999;
+}

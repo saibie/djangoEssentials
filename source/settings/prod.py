@@ -1,4 +1,4 @@
-from src.settings import *
+from source.settings import *
 
 # ALLOWED_HOSTS = ['saibie.asuscomm.com',
 #                  'saibie1677.hopto.org',

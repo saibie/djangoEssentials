@@ -27,6 +27,42 @@ document.querySelectorAll('.cancel-button').forEach(cB => {
     })
 })
 
+// csrf token 로더
+function csrftokenLoader() {
+    return document.querySelector('input[name="csrfmiddlewaretoken"]').value;
+}
+// 페이지 리로더
+function postPageReload(url, data) {
+    const csrftoken = csrftokenLoader();
+    fetch(url, {
+        method: 'post',
+        body: data,
+        headers :{
+            'X-CSRFToken': csrftoken
+        }
+    })
+    .then(response => {
+        location.reload(true);
+    })
+    .catch(error => console.error('Error: ', error));
+}
+
+// 단순 페이지 이동 버튼
+document.querySelectorAll('.justHref').forEach(btn => {
+    btn.addEventListener('click', e => {
+        e.preventDefault();
+        const form = document.createElement('form');
+        form.method = 'post'; form.action = btn.getAttribute('url');
+        const csrftoken = csrftokenLoader();
+        const tokenInput = document.createElement('input');
+        tokenInput.type = 'hidden'; tokenInput.name = 'csrfmiddlewaretoken'; tokenInput.value = csrftoken;
+        form.appendChild(tokenInput);
+
+        document.body.appendChild(form);
+        form.submit();
+    })
+})
+
 // 비활성화 버튼(inactivated) 잠금 함수
 document.querySelectorAll('[class*="inactivated"]').forEach(iB => {
     iB.addEventListener('click', function(e){
@@ -77,3 +113,89 @@ document.querySelectorAll('.hyperref-not-submit').forEach(button => {
         }
     })
 })
+
+// json response를 이용해 func를 실행하는 함수
+function jsonReceiver(url, data, func) {
+    const csrftoken = csrftokenLoader();
+    fetch(url, {
+        method: 'post',
+        body: data,
+        headers: {
+            'X-CSRFToken': csrftoken
+        }
+    })
+    .then(response => response.json())
+    .then(func)
+    .catch(error => {console.error(error);});
+}
+
+// html의 특정 노드를 페이지의 특정 노드에 렌더링하는 함수
+function nodeRender(url, data, html_node_query, target_node, replaceBool=false) {
+    const csrftoken = csrftokenLoader();
+    fetch(url, {
+        method: 'post',
+        body: data,
+        headers: {
+            'X-CSRFToken': csrftoken
+        }
+    })
+    .then(response => response.text())
+    .then(html => {
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = html;
+        const htmlNode = tempDiv.querySelector(html_node_query);
+        target_node.innerHTML = htmlNode.innerHTML;
+        
+        replaceBool ? history.pushState(null, null, url) : undefined;
+
+        companyDescWatcher(target_node.querySelectorAll('td.companyDesc'));
+        target_node.querySelectorAll('td.companyDesc').forEach(adjustTextareaHeight);
+        afterTbodyLoadListenerRegister();
+    })
+    .catch(error => {console.error(error);});
+}
+
+// js로 form 제출하는 함수
+function jsFormSubmitter(url, data) {
+    const csrftoken = csrftokenLoader();
+    const form = document.createElement('form');
+    form.method = 'post'; form.action = url;
+    const tokenInput = document.createElement('input');
+    tokenInput.type = 'hidden'; tokenInput.name = 'csrfmiddlewaretoken'; tokenInput.value = csrftoken;
+    form.appendChild(tokenInput);
+
+    for (const key in data) {
+        if (data.hasOwnProperty(key)) {
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = key;
+            input.value = data[key];
+            form.appendChild(input);
+        }
+    }
+
+    document.body.appendChild(form);
+    // console.log(form.outerHTML);
+    form.submit();
+}
+
+// fetch 후 func를 실행하는 함수
+function funcAfterFetch(url, data, func) {
+    const csrftoken = csrftokenLoader();
+    fetch(url, {
+        method: 'post',
+        body: data,
+        headers: {
+            'X-CSRFToken': csrftoken
+        }
+    })
+    .then(func)
+    .catch(error => {console.error(error);});
+}
+
+
+/* =====================================================================================================
+========================================================================================================
+==================================== ↑ 위로는 모듈 정의 구간 ↑ =========================================
+========================================================================================================
+===================================================================================================== */

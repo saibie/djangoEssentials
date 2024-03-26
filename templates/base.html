@@ -18,15 +18,14 @@
             </div>
             <div class="top-controllers">
                 {% if user.is_authenticated %}
-                <a class="base-button" href="{% url 'account:logout' %}">{{ user.username }} (로그아웃)</a>
+                <div class="base-button">{{ user.username }}</div>
+                <a class="base-button" href="{% url 'account:logout' %}">로그아웃</a>
                 {% else %}
                 <a class="base-button" href="{% url 'account:login' %}">로그인</a>
-                {% endif %}
-                {% if not user.is_authenticated %}
                 <a class="base-button" href="{% url 'account:signup' %}">회원가입</a>
-                {% else %}
-                <div class="base-button disabled">회원가입</div>
                 {% endif %}
+                
+                <div class="base-button disabled">회원가입</div>
             </div>
             <div class="left-controllers">
             </div>

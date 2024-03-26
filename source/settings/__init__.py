@@ -79,6 +79,12 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": BASE_DIR / "db.sqlite3",
+        # 'ENGINE': 'django.db.backends.mysql',
+        # 'NAME': 'saibie', # 새로 만든 데이터베이스의 이름
+        # 'USER': 'root',
+        # 'PASSWORD': 'Tkdlqi3874@)$*(',
+        # 'HOST': 'localhost',
+        # 'PORT': '3306',
     }
 }
 

@@ -2,7 +2,7 @@
 URL configuration for source project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/4.2/topics/http/urls/
+    https://docs.djangoproject.com/en/5.0/topics/http/urls/
 Examples:
 Function views
     1. Add an import:  from my_app import views
@@ -21,9 +21,9 @@ from mainpage.views import mainView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("account/", include('account.urls')),
-    path('', mainView, name='main'),
+    path("account/", include("account.urls")),
+    path("", mainView, name="main"),
 ]
 
-handler404 = 'mainpage.views.page_not_found'
-handler500 = 'mainpage.views.internal_error'
+handler404 = "mainpage.views.page_not_found"
+handler500 = "mainpage.views.internal_error"

@@ -19,7 +19,10 @@
             <div class="top-controllers">
                 {% if user.is_authenticated %}
                 <div class="base-button">{{ user.username }}</div>
-                <a class="base-button" href="{% url 'account:logout' %}">로그아웃</a>
+                <form method="post" action="{% url 'account:logout' %}"> <!-- Django 5 이후로 로그아웃은 POST 요청만 받음 -->
+                    {% csrf_token %}
+                    <button class="base-button">로그아웃</button>
+                </form>
                 {% else %}
                 <a class="base-button" href="{% url 'account:login' %}">로그인</a>
                 <a class="base-button" href="{% url 'account:signup' %}">회원가입</a>

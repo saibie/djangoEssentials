@@ -145,6 +145,16 @@ function jsFormSubmitter(url, data, method='post') {
     form.submit();
 }
 
+// 계정관리버튼 form제출
+document.querySelectorAll('button.account-button').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const url = btn.getAttribute('url');
+        const method = btn.getAttribute('method');
+        jsFormSubmitter(url, {}, method);
+    })
+})
+
 // fetch 후 func를 실행하는 함수
 function funcAfterFetch(url, data, func) {
     const csrftoken = csrftokenLoader();

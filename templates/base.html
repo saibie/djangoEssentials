@@ -8,25 +8,29 @@
         <link rel="stylesheet" href="{% static 'css/account.css' %}">
     </head>
     <body>
+        {% csrf_token %}
         <div class="main-body">
-            <div class="apptitle">
-                {% if pagetitle is None %}
-                기능 선택
-                {% else %}
-                {{ pagetitle }}
-                {% endif %}
+            <div class="service-logo">
+                서비스 로고
             </div>
             <div class="top-controllers">
-                {% if user.is_authenticated %}
-                <div class="base-button">{{ user.username }}</div>
-                <form method="post" action="{% url 'account:logout' %}"> <!-- Django 5 이후로 로그아웃은 POST 요청만 받음 -->
-                    {% csrf_token %}
-                    <button class="base-button">로그아웃</button>
-                </form>
-                {% else %}
-                <a class="base-button" href="{% url 'account:login' %}">로그인</a>
-                <a class="base-button" href="{% url 'account:signup' %}">회원가입</a>
-                {% endif %}
+                <div class="apptitle">
+                    {% if pagetitle is None %}
+                    기능 선택
+                    {% else %}
+                    {{ pagetitle }}
+                    {% endif %}
+                </div>
+                <div class="account-controllers">
+                    {% if user.is_authenticated %}
+                    <button class="base-button account-button account-name">{{ user.username }}</button>
+                    <button class="base-button account-button" url="{% url 'account:logout' %}" method="post">로그아웃</button>
+                    </form>
+                    {% else %}
+                    <button class="base-button account-button account-login" url="{% url 'account:login' %}" method="get">로그인</button>
+                    <button class="base-button account-button" url="{% url 'account:signup' %}" method="get">회원가입</button>
+                    {% endif %}
+                </div>
             </div>
             <div class="left-controllers">
             </div>

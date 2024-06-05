@@ -51,7 +51,27 @@ button {
 .left-controllers{
     background-color: #bfbfbf;
 }
-
+.left-appbutton {
+    display:flex; 
+    box-sizing: border-box;
+    width: 15rem; height: 3rem;
+    column-gap: .5rem;
+    font-size:1.5rem; 
+    color:#000000;
+    font-weight:bold;
+    align-items: center; 
+    justify-content: flex-start;
+    text-decoration:none;
+    padding: 0rem 1rem;
+}
+.incontents {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.main-title {
+    font-size: 6rem;
+}
 /* 버튼 */
 .base-button {
     display: flex;

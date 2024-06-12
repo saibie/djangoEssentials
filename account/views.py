@@ -1,9 +1,22 @@
+from django.http import HttpRequest, HttpResponse
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
 from account.forms import UserForm
 
+def signup(
+    request: HttpRequest
+) -> HttpResponse:
+    '''
+    회원가입 페이지.
+    GET 요청시 회원가입 Form 페이지 렌더.
+    POST 요청시 회원가입 절차 진행.
 
-def signup(request):
+    Args:
+        request (HttpRequest)
+
+    Returns:
+        HttpResponse
+    '''
     if request.method == "POST":
         form = UserForm(request.POST)
         if form.is_valid():

@@ -260,6 +260,15 @@ function counterToKorean(counter) {
     } else {return counter;}
 };
 
+/**
+ * element의 모든 하위 요소를 제거합니다.
+ * @param {Element} element 
+ */
+function removeAllChildren(element) {
+    while (element.firstChild) {
+        element.removeChild(element.firstChild);
+    }
+}
 /* =====================================================================================================
 ========================================================================================================
 ==================================== ↑ 위로는 모듈 정의 구간 ↑ =========================================

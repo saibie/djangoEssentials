@@ -30,7 +30,7 @@ def page_not_found(
     Returns:
         HttpResponse
     '''
-    return render(request, "common/404.html", {})
+    return render(request, "404.html", {})
 
 def internal_error(
     request: HttpRequest
@@ -44,4 +44,4 @@ def internal_error(
     Returns:
         HttpResponse
     '''
-    return render(request, "common/500.html", {})
+    return render(request, "500.html", {})

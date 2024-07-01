@@ -122,7 +122,13 @@ function jsonReceiver(url, data, func, method='post') {
             'X-CSRFToken': csrftoken
         }
     })
-    .then(response => response.json())
+    .then(response => {
+        if (response.headers.get('content-type')?.includes('application/json')) {
+            return response.json();
+        } else {
+            return response.text(); // JSON이 아닌 경우 텍스트로 변환
+        }
+    })
     .then(func)
     .catch(error => {console.error(error);});
 }

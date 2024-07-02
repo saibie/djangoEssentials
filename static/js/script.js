@@ -113,7 +113,7 @@ document.querySelectorAll('.hyperref-not-submit').forEach(button => {
  * @param {Function} func json을 입력받아 실행할 함수
  * @param {String} method 'get'이나 'post'
  */
-function jsonReceiver(url, data, func, method='post') {
+function jsonReceiver(url, data, func, method='post', catchfunc=error => {console.error(error);}) {
     const csrftoken = csrftokenLoader();
     fetch(url, {
         method: method,
@@ -130,7 +130,7 @@ function jsonReceiver(url, data, func, method='post') {
         }
     })
     .then(func)
-    .catch(error => {console.error(error);});
+    .catch(catchfunc);
 }
 
 /**

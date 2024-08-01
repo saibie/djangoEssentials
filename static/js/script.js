@@ -275,6 +275,44 @@ function removeAllChildren(element) {
         element.removeChild(element.firstChild);
     }
 }
+
+/**
+ * html 인코더
+ * @param {String} str 
+ * @returns 
+ */
+function htmlEncode(str) {
+    return String(str).replace(/[&<>"'`=\/]/g, function(s) {
+        return {
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#39;',
+            '/': '&#x2F;',
+            '=': '&#x3D;',
+            '`': '&#x60;'
+        }[s];
+    });
+}
+
+/**
+ * 한 줄로 새로운 Element 생성과 class 및 속성 설정
+ * @param {String} tag tag의 이름
+ * @param {Array} classList class list
+ * @param {Object} attrs 속성의 이름을 키로, 내용을 값으로 가지는 Object
+ * @returns 
+ */
+function createElementInOneLine(tag, classList=[], attrs={}) {
+    const lmnt = document.createElement(tag);
+    for (const cls of classList) {
+        lmnt.classList.add(cls);
+    };
+    for (const attr in attrs) {
+        lmnt.setAttribute(attr, attrs[attr]);
+    };
+    return lmnt
+}
 /* =====================================================================================================
 ========================================================================================================
 ==================================== ↑ 위로는 모듈 정의 구간 ↑ =========================================

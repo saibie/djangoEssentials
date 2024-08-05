@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "daphne",
     "backtasks.apps.BacktasksConfig", 
     "account.apps.AccountConfig",
     "mainpage.apps.MainpageConfig",

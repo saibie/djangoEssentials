@@ -10,6 +10,6 @@ django-admin startproject source .
 ## pip
 ### WebSocket
 ```
-channels
+'channels[daphne]'
 channels_redis
 ```

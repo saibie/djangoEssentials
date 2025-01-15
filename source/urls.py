@@ -17,6 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include, reverse_lazy
 from django.views.generic import RedirectView
+from django.conf import settings
+from django.conf.urls.static import static
 from mainpage.views import mainView
 
 urlpatterns = [
@@ -24,6 +26,10 @@ urlpatterns = [
     path("account/", include("account.urls")),
     path("", mainView, name="main"),
 ]
+
+# MEDIA_URL로 들어오는 요청에 대해 MEDIA_ROOT 경로를 탐색한다.
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 handler404 = "mainpage.views.page_not_found"
 handler500 = "mainpage.views.internal_error"

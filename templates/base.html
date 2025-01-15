@@ -12,7 +12,9 @@
         {% csrf_token %}
         <div class="main-body">
             <div class="service-logo">
-                서비스 로고
+                <a href="{% url 'main' %}">
+                    서비스 로고
+                </a>
             </div>
             <div class="top-controllers">
                 <div class="apptitle">

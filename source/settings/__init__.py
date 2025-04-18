@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import os, pkgutil, importlib
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -29,12 +30,25 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
+def find_started_apps(path=BASE_DIR):
+    apps = []
+    for _, name, is_pkg in pkgutil.iter_modules([path]):
+        if is_pkg:
+            try:
+                module = importlib.import_module(f"{name}.apps")
+                app_configs = [attr for attr in dir(module) if attr.endswith("Config")]
+                if app_configs:
+                    app_config = [attr for attr in app_configs if attr != "AppConfig"]
+                    apps.append(f"{name}.apps.{app_config[0]}")
+            except ModuleNotFoundError:
+                pass
+    return apps
+
+STARTED_APPS = find_started_apps()
 
 INSTALLED_APPS = [
     "daphne",
-    "backtasks.apps.BacktasksConfig", 
-    "account.apps.AccountConfig",
-    "mainpage.apps.MainpageConfig",
+    *STARTED_APPS,
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",

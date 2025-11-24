@@ -11,18 +11,18 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
-import os, pkgutil, importlib
+import os, sys, pkgutil, importlib
 from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
-
+sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-s@0p+7_$j7u3c&m0eh_h@u2+q@+4pv$ec*1zu^-ls1%ai(c5ph"
+SECRET_KEY = "lfakv0dhgsjdzj8yvntwltamfwnbjd2jgz"
 # SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -32,18 +32,19 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
-def find_started_apps(path=BASE_DIR):
+def find_started_apps(path=os.path.join(BASE_DIR, 'apps')):
     apps = []
     for _, name, is_pkg in pkgutil.iter_modules([path]):
         if is_pkg:
             try:
-                module = importlib.import_module(f"{name}.apps")
+                module = importlib.import_module(f"apps.{name}.apps")
                 app_configs = [attr for attr in dir(module) if attr.endswith("Config")]
                 if app_configs:
                     app_config = [attr for attr in app_configs if attr != "AppConfig"]
-                    apps.append(f"{name}.apps.{app_config[0]}")
+                    # apps.append(f"{name}.apps.{app_config[0]}")
+                    apps.append(f"{name}")
             except ModuleNotFoundError:
-                pass
+                print(f"No apps.py found in apps.{name}, skipping.")
     return apps
 
 STARTED_APPS = find_started_apps()
